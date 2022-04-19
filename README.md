@@ -14,7 +14,7 @@ See 'Lab07 dataflow diagram.pdf' in the ![root folder](Lab07%20dataflow%20diagra
 
 ## Credits and Collaborators
 
-Gina Napier [GitHub](https://github.com/)  
+Gina Napier [GitHub](https://github.com/gina305)  
 Darius Owens [GitHub](https://github.com/DariusO92)  
 
 ## Resources

@@ -13,7 +13,20 @@ const PORT = process.env.PORT || 3002;  //  add fallback port
 //  use section - calls requires items
 
 //  routes - defines endpoints
+app.get('/', (req, resp) => {
+  resp.send('ehlo from city-explorer-api server!');
+});
 
+app.get('/weather', (req, resp) => {
+  try {
+    let reqQuery = req.query.city;
+    let weatherData = data.find((item) => item.city_name === reqQuery);
+    resp.send(weatherData);
+  }
+  catch (error) {
+    resp.send(error);
+  }
+});
 //  listen - starts the server
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 

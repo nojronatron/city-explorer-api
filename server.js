@@ -21,7 +21,7 @@ app.get('/weather', (req, resp) => {
   try {
     let reqQuery = req.query.city;
     let weatherData = data.find((item) => item.city_name === reqQuery);
-    resp.send(weatherData);
+    weatherData ? resp.send(weatherData) : resp.send('City not found.');
   }
   catch (error) {
     resp.send(error);

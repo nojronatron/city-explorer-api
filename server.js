@@ -4,7 +4,7 @@
 console.log("ehlo");
 
 //  requires
-const data = require('data/weather.json');
+const data = require('./data/weather.json');
 
 //  use section - calls requires items
 

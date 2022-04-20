@@ -10,6 +10,14 @@ require('dotenv').config(); //  grabs config file
 const app = express();  //  defines and executes the app
 const PORT = process.env.PORT || 3002;  //  add fallback port
 
+//  classes
+class Forecast {
+  constructor(date, description){
+    this.date = date;
+    this.description = description;
+  }
+}
+
 //  use section - calls requires items
 
 //  routes - defines endpoints
@@ -17,11 +25,15 @@ app.get('/', (req, resp) => {
   resp.send('ehlo from city-explorer-api server!');
 });
 
+//  { data, city_name, lon, timezone, lat, country_code, state_code }
+
 app.get('/weather', (req, resp) => {
   try {
     let reqQuery = req.query.city;
-    let weatherData = data.find((item) => item.city_name === reqQuery);
-    weatherData ? resp.send(weatherData) : resp.send('City not found.');
+    let cityWx = data.find((item) => item.city_name === reqQuery);
+    let wxData = cityWx.data.map(dayWx => new Forecast(dayWx.datetime, dayWx.weather.description));
+    console.log(wxData);
+    wxData ? resp.send(wxData) : resp.send('City not found.');
   }
   catch (error) {
     resp.send(error);

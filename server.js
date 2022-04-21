@@ -32,6 +32,7 @@ app.get('/', (req, resp) => {
 app.get('/weather', (req, resp) => {
   try {
     let reqQuery = req.query.city;
+    console.log(`weather route says: received ${reqQuery}`);
     let cityWx = data.find((item) => item.city_name === reqQuery);
     let wxData = cityWx.data.map(dayWx => new Forecast(dayWx.datetime, dayWx.weather.description));
     console.log(wxData);

@@ -7,9 +7,11 @@ console.log('ehlo');
 const data = require('./data/weather.json');
 const express = require('express'); //  imports express.js
 require('dotenv').config(); //  grabs config file
-const app = express();  //  defines and executes the app
-const PORT = process.env.PORT || 3002;  //  add fallback port
+const app = express(); //  defines and executes the app
 const cors = require('cors');
+const PORT = process.env.PORT || 3002; //  add fallback port
+
+//  use section - calls requires items
 app.use(cors());
 
 //  classes
@@ -20,16 +22,12 @@ class Forecast {
   }
 }
 
-//  use section - calls requires items
-
 //  routes - defines endpoints
 app.get('/', (req, resp) => {
   resp.send('ehlo from city-explorer-api server!');
 });
 
-//  { data, city_name, lon, timezone, lat, country_code, state_code }
-
-app.get('/weather', (req, resp) => {
+app.get('/weather', (req, resp, next) => {
   try {
     let reqQuery = req.query.city;
     console.log(`weather route says: received ${reqQuery}`);
@@ -39,10 +37,15 @@ app.get('/weather', (req, resp) => {
     wxData ? resp.send(wxData) : resp.send('City not found.');
   }
   catch (error) {
-    resp.send(error);
+    next(error);
   }
 });
+
 //  listen - starts the server
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 //  errors - define error handlers
+app.use((err, req, res, next) => {
+  console.log(err.stack); // from expressjs.com/en/guide/error-handling/html
+  res.status(500).send('Something went wrong!');
+});
